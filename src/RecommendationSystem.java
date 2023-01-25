@@ -42,7 +42,7 @@ public class RecommendationSystem {
 		Movie movie5 = new Movie(5,"SpiderMan No Way Home");
 		Movie movie6 = new Movie(6,"The Conjuring");
 		Movie movie7 = new Movie(7,"The Crown");
-		Movie movie8 = new Movie(8,"The Exorcist");
+		Movie movie8 = new Movie(8,"The Exorcist II");
 		
 		List<Movie> allMovies = new ArrayList<>();
 		allMovies.add(movie1);
