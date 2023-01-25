@@ -203,7 +203,11 @@ public class Recommender {
 		//First we are going to calculate the similarities and let's set a limit of Neighbors
 		HashMap<Integer, Double > similarUsers = getUsersSimilarities(a);
 		
-		int num_users = Math.min(similarUsers.size(), NUM_NEIGHBORS);
+		int numUsers = Math.min(similarUsers.size(), NUM_NEIGHBORS);
+		
+		if (numUsers == 0) {
+			return 0;
+		}
 		
 		double rating; 
 		
@@ -214,7 +218,7 @@ public class Recommender {
 		
 		for(Map.Entry<Integer, Double> user: similarUsers.entrySet()) {
 			
-			if(j < num_users) {
+			if(j < numUsers) {
 				
 				double avgRj = calculateAverageRating(user.getKey());
 
