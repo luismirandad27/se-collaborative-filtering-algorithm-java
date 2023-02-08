@@ -27,22 +27,23 @@ public class RecommendationSystem {
 	 * {} -> main function
 	 */
 	public static void main(String[] args) {
+		
+		
+		
 		//Creating a set Users
 		User user1 = new User(1,"Luis");
 		User user2 = new User(2,"Gianella");
-		User user3 = new User(3,"Marc");
-		User user4 = new User(4,"Victor");
+		User user4 = new User(3,"Victor");
+		User user3 = new User(4,"Marc");
 		User user5 = new User(5,"Regal");
 		
 		//Creating a set Movies
 		Movie movie1 = new Movie(1,"Avengers: Endgame");
-		Movie movie2 = new Movie(2,"The Godfather");
-		Movie movie3 = new Movie(3,"The Office");
-		Movie movie4 = new Movie(4,"Parks & Recreation");
+		Movie movie2 = new Movie(2,"The Conjuring");
+		Movie movie3 = new Movie(3,"Midnight in Paris");
+		Movie movie4 = new Movie(4,"The Pianist");
 		Movie movie5 = new Movie(5,"SpiderMan No Way Home");
-		Movie movie6 = new Movie(6,"The Conjuring");
-		Movie movie7 = new Movie(7,"The Crown");
-		Movie movie8 = new Movie(8,"The Exorcist");
+		Movie movie6 = new Movie(6,"Evil Dead");
 		
 		List<Movie> allMovies = new ArrayList<>();
 		allMovies.add(movie1);
@@ -51,51 +52,42 @@ public class RecommendationSystem {
 		allMovies.add(movie4);
 		allMovies.add(movie5);
 		allMovies.add(movie6);
-		allMovies.add(movie7);
-		allMovies.add(movie8);
-		
 		
 		//Add ratings: Let's suppose that the data comes from a List<UserMovie>
 		List<UserMovie> totalRatings = new ArrayList<>();
 		totalRatings.add(new UserMovie(user1,movie1,4));
-		totalRatings.add(new UserMovie(user1,movie2,3));
 		totalRatings.add(new UserMovie(user1,movie3,5));
-		totalRatings.add(new UserMovie(user1,movie5,1));
+		totalRatings.add(new UserMovie(user1,movie5,5));
 		
-		totalRatings.add(new UserMovie(user2,movie1,2));
-		totalRatings.add(new UserMovie(user2,movie2,4));
-		totalRatings.add(new UserMovie(user2,movie4,3));
-		totalRatings.add(new UserMovie(user2,movie6,3));
-		totalRatings.add(new UserMovie(user2,movie8,4));
+		totalRatings.add(new UserMovie(user2,movie1,5));
+		totalRatings.add(new UserMovie(user2,movie2,1));
+		totalRatings.add(new UserMovie(user2,movie3,4));
+		totalRatings.add(new UserMovie(user2,movie4,2));
+		totalRatings.add(new UserMovie(user2,movie5,5));
+		totalRatings.add(new UserMovie(user2,movie6,1));
 		
-		totalRatings.add(new UserMovie(user3,movie1,1));
-		totalRatings.add(new UserMovie(user3,movie2,3));
-		totalRatings.add(new UserMovie(user3,movie4,5));
-		totalRatings.add(new UserMovie(user3,movie5,5));
-		totalRatings.add(new UserMovie(user3,movie6,2));
-		totalRatings.add(new UserMovie(user3,movie7,1));
-		totalRatings.add(new UserMovie(user3,movie8,5));
 		
-		totalRatings.add(new UserMovie(user4,movie2,2));
+		totalRatings.add(new UserMovie(user3,movie2,2));
+		totalRatings.add(new UserMovie(user3,movie3,2));
+		totalRatings.add(new UserMovie(user3,movie5,4));
+		totalRatings.add(new UserMovie(user3,movie6,3));
+		
+		totalRatings.add(new UserMovie(user4,movie1,4));
+		totalRatings.add(new UserMovie(user4,movie2,3));
+		totalRatings.add(new UserMovie(user4,movie3,1));
 		totalRatings.add(new UserMovie(user4,movie4,4));
-		totalRatings.add(new UserMovie(user4,movie5,4));
-		totalRatings.add(new UserMovie(user4,movie6,5));
-		totalRatings.add(new UserMovie(user4,movie7,1));
-		totalRatings.add(new UserMovie(user4,movie8,5));
+		totalRatings.add(new UserMovie(user4,movie5,5));
 		
-		totalRatings.add(new UserMovie(user5,movie1,5));
-		totalRatings.add(new UserMovie(user5,movie2,4));
-		totalRatings.add(new UserMovie(user5,movie3,3));
-		totalRatings.add(new UserMovie(user5,movie4,2));
-		totalRatings.add(new UserMovie(user5,movie5,1));
-		totalRatings.add(new UserMovie(user5,movie6,4));
-		totalRatings.add(new UserMovie(user5,movie7,2));
-		totalRatings.add(new UserMovie(user5,movie8,5));
+		
+		totalRatings.add(new UserMovie(user5,movie1,4));
+		totalRatings.add(new UserMovie(user5,movie4,5));
+		totalRatings.add(new UserMovie(user5,movie5,5));
+		
 		
 		HashMap<Integer, HashMap<Integer, Double>> ratings = convertListToHashMap(totalRatings);
 		
 		//Testing if everything was stored correctly
-		printHashMap(ratings);
+		//printHashMap(ratings);
 		
 		//Creating our recommender object
 		Recommender rec = new Recommender(ratings);

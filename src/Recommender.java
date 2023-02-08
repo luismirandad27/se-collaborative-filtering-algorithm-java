@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class Recommender {
 
-	private static final int NUM_NEIGHBORS = 3;
+	private static final int NUM_NEIGHBORS = 2;
 	private HashMap<Integer, HashMap<Integer,Double>> ratings;
 	
 	
@@ -111,17 +111,24 @@ public class Recommender {
 			
 			numerator += (moviesRatedA.get(crm.get(i)) - avgRa)*(moviesRatedB.get(crm.get(i)) - avgRb);
 			
-			denom1	  += Math.pow(moviesRatedA.get(crm.get(i)) - avgRa, 2);			
-			denom2	  += Math.pow(moviesRatedB.get(crm.get(i)) - avgRb, 2);
+			/*
+			 * denom1	  += Math.pow(moviesRatedA.get(crm.get(i)) - avgRa, 2);
+			 * denom2	  += Math.pow(moviesRatedB.get(crm.get(i)) - avgRb, 2);			
+			 */
+			
+			denom1	  += Math.pow(moviesRatedA.get(crm.get(i)), 2);
+			denom2	  += Math.pow(moviesRatedB.get(crm.get(i)), 2);
+			
 			
 		}
 		
 		denom1 = Math.sqrt(denom1);
 		denom2 = Math.sqrt(denom2);
 		
-		similarity = numerator / (denom1 * denom2);
-		
-		return similarity;
+		if (crm.size()> 2 && numerator !=0 && denom1 != 0 && denom2 != 0) {
+			return numerator / (denom1 * denom2);
+		}
+		return -100;
 		
 	}
 	
@@ -220,13 +227,30 @@ public class Recommender {
 			
 			if(j < numUsers) {
 				
+				System.out.println("User "+user.getKey());
+				
 				double avgRj = calculateAverageRating(user.getKey());
-
+				
+				System.out.println("Average Rating j "+avgRj);
+				
 				double similarityWithJ = user.getValue();
 				
-				numerator += similarityWithJ * (ratings.get(user.getKey()).get(movieIdx) - avgRj);
+				System.out.println("Similarity "+similarityWithJ);
 				
-				denom += Math.abs(similarityWithJ);
+				double ratingFromUser = ratings.get(user.getKey()).get(movieIdx) == null ? 0 : ratings.get(user.getKey()).get(movieIdx) ;
+				
+				if (ratingFromUser > 0) {
+				
+					numerator += similarityWithJ * (ratingFromUser  - avgRj);
+					
+					denom += Math.abs(similarityWithJ);
+					
+				}else {
+					
+					System.out.println("User "+user.getKey()+" didn't rate movie "+movieIdx);
+					
+				}
+				
 			}
 			
 			j++;
@@ -234,6 +258,7 @@ public class Recommender {
 		}
 		
 		double avgRa = calculateAverageRating(a);
+		System.out.println("rating movie "+movieIdx+": "+avgRa);
 		
 		rating = avgRa + (numerator / denom);
 		
@@ -262,7 +287,7 @@ public class Recommender {
 			if (ratings.get(a).get(movie.getMovieId()) == null) {
 				
 				predictedRatings.put(movie.getMovieId(), calculatePrediction(a,movie.getMovieId()));
-				
+				System.out.println("--------------------------");
 			}
 			
 		}
