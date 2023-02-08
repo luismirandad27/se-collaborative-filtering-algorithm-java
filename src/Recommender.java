@@ -68,7 +68,7 @@ public class Recommender {
 	 */
 	public double calculateAverageRating(int a) {
 		
-		double average = 0;
+		double average = 0.0;
 		
 		HashMap<Integer,Double> moviesRatedA = ratings.get(a);
 		
@@ -95,37 +95,31 @@ public class Recommender {
 	 */
 	public double calculateSimilarity(int a, int b, List<Integer> crm) {
 		
-		double similarity = 0;
+		double similarity = 0.0;
 		
 		double avgRa = calculateAverageRating(a);
 		double avgRb = calculateAverageRating(b);
 		
-		double numerator = 0;
-		double denom1 = 0;
-		double denom2 = 0;
+		double numerator = 0.0;
+		double denom1 = 0.0;
+		double denom2 = 0.0;
 		
 		HashMap<Integer,Double> moviesRatedA = ratings.get(a);
 		HashMap<Integer,Double> moviesRatedB = ratings.get(b);
 		
 		for(int i=0; i< crm.size(); i++) {
 			
-			numerator += (moviesRatedA.get(crm.get(i)) - avgRa)*(moviesRatedB.get(crm.get(i)) - avgRb);
-			
-			/*
-			 * denom1	  += Math.pow(moviesRatedA.get(crm.get(i)) - avgRa, 2);
-			 * denom2	  += Math.pow(moviesRatedB.get(crm.get(i)) - avgRb, 2);			
-			 */
+			numerator += (moviesRatedA.get(crm.get(i)))*(moviesRatedB.get(crm.get(i)));
 			
 			denom1	  += Math.pow(moviesRatedA.get(crm.get(i)), 2);
 			denom2	  += Math.pow(moviesRatedB.get(crm.get(i)), 2);
-			
 			
 		}
 		
 		denom1 = Math.sqrt(denom1);
 		denom2 = Math.sqrt(denom2);
 		
-		if (crm.size()> 2 && numerator !=0 && denom1 != 0 && denom2 != 0) {
+		if (crm.size()> 1 && numerator !=0 && denom1 != 0 && denom2 != 0) {
 			return numerator / (denom1 * denom2);
 		}
 		return -100;
@@ -218,24 +212,18 @@ public class Recommender {
 		
 		double rating; 
 		
-		double numerator = 0;
-		double denom = 0;
+		double numerator = 0.0;
+		double denom = 0.0;
 		
 		int j=0;
 		
 		for(Map.Entry<Integer, Double> user: similarUsers.entrySet()) {
 			
-			if(j < numUsers) {
-				
-				System.out.println("User "+user.getKey());
+			if (j<numUsers) {
 				
 				double avgRj = calculateAverageRating(user.getKey());
 				
-				System.out.println("Average Rating j "+avgRj);
-				
 				double similarityWithJ = user.getValue();
-				
-				System.out.println("Similarity "+similarityWithJ);
 				
 				double ratingFromUser = ratings.get(user.getKey()).get(movieIdx) == null ? 0 : ratings.get(user.getKey()).get(movieIdx) ;
 				
@@ -245,20 +233,20 @@ public class Recommender {
 					
 					denom += Math.abs(similarityWithJ);
 					
-				}else {
-					
-					System.out.println("User "+user.getKey()+" didn't rate movie "+movieIdx);
+					j++;
 					
 				}
 				
-			}
-			
-			j++;
+			}else {
+				
+				break;
+				
+			}			
 		
 		}
 		
 		double avgRa = calculateAverageRating(a);
-		System.out.println("rating movie "+movieIdx+": "+avgRa);
+		
 		
 		rating = avgRa + (numerator / denom);
 		
@@ -287,7 +275,7 @@ public class Recommender {
 			if (ratings.get(a).get(movie.getMovieId()) == null) {
 				
 				predictedRatings.put(movie.getMovieId(), calculatePrediction(a,movie.getMovieId()));
-				System.out.println("--------------------------");
+
 			}
 			
 		}

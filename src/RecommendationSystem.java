@@ -28,13 +28,11 @@ public class RecommendationSystem {
 	 */
 	public static void main(String[] args) {
 		
-		
-		
 		//Creating a set Users
 		User user1 = new User(1,"Luis");
 		User user2 = new User(2,"Gianella");
-		User user4 = new User(3,"Victor");
-		User user3 = new User(4,"Marc");
+		User user3 = new User(3,"Victor");
+		User user4 = new User(4,"Marc");
 		User user5 = new User(5,"Regal");
 		
 		//Creating a set Movies
@@ -100,7 +98,7 @@ public class RecommendationSystem {
 		
 		for(Map.Entry<Integer, Double> m: allPredictions.entrySet()) {
 			
-			System.out.println("Prediction for movie "+m.getKey()+" is: "+m.getValue());
+			System.out.println("Prediction for movie "+ allMovies.get(m.getKey()-1).getMovieName()+" is: "+m.getValue());
 			
 		}
 		
@@ -120,7 +118,7 @@ public class RecommendationSystem {
 			
 			for(Map.Entry<Integer, Double> f: e.getValue().entrySet()) {
 				
-				System.out.println("Movie id: "+f.getKey()+" rating: "+f.getValue());
+				System.out.println("Movie name: "+ f.getKey()+" rating: "+f.getValue());
 				
 			}
 			
